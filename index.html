@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> CitationHub | AI-Powered Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-blue-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-graduation-cap text-3xl mr-3"></i>
+                    <h1 class="text-2xl md:text-3xl font-bold">CitationHub</h1>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="guide-btn" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-book-open mr-2"></i> Guide
+                    </button>
+                    <button class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-question-circle mr-2"></i> Help
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 text-white">
+                <h2 class="text-2xl font-bold mb-2">Generate Citations Instantly</h2>
+                <p class="opacity-90">AI-powered citation tool supporting APA, MLA, Chicago, Harvard, and IEEE formats</p>
+            </div>
+            
+            <div class="p-6">
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
+                    <h3 class="font-semibold text-blue-800 mb-2">How our search works:</h3>
+                    <ul class="list-disc pl-5 text-sm text-blue-700 space-y-1">
+                        <li>Use our search bar for locate the book and let our AI do the referencing for you</li>
+                        <li>Manualy choose the type of material you want to reference below and instantly get correct citation</li>
+                        <li>Tap apostrophe to get intext refrencing after search results</li>
+                        <li>Export your refernce into text file</li>
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <div class="relative mb-6">
+                        <input type="text" id="identifier-search" placeholder="Enter ISBN, ISSN, DOI, or URL for best accuracy (or enter manually below)" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-1">
+                            <button id="search-web-btn" class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded-lg text-sm flex items-center">
+                                <i class="fas fa-globe mr-1"></i> Web
+                            </button>
+                            <button id="search-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="search-loading" class="hidden text-center py-4">
+                        <i class="fas fa-circle-notch fa-spin text-blue-500 text-2xl"></i>
+                        <p class="text-gray-600 mt-2">Searching for source information...</p>
+                    </div>
+                    <div id="search-error" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+                        <p>No results found. Please try a different identifier or enter the details manually.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <button id="journal-btn" class="source-type-btn bg-blue-100 text-blue-800 border-blue-300">
+                            <i class="fas fa-book-journal-whiskers mr-2"></i> Journal Article
+                        </button>
+                        <button id="conference-btn" class="source-type-btn bg-purple-100 text-purple-800 border-purple-300">
+                            <i class="fas fa-users mr-2"></i> Conference Paper
+                        </button>
+                        <button id="thesis-btn" class="source-type-btn bg-green-100 text-green-800 border-green-300">
+                            <i class="fas fa-scroll mr-2"></i> Thesis/Dissertation
+                        </button>
+                        <button id="website-btn" class="source-type-btn bg-yellow-100 text-yellow-800 border-yellow-300">
+                            <i class="fas fa-globe mr-2"></i> Website
+                        </button>
+                        <button id="newspaper-btn" class="source-type-btn bg-red-100 text-red-800 border-red-300">
+                            <i class="fas fa-newspaper mr-2"></i> Newspaper
+                        </button>
+                        <button id="magazine-btn" class="source-type-btn bg-pink-100 text-pink-800 border-pink-300">
+                            <i class="fas fa-book-open mr-2"></i> Magazine
+                        </button>
+                        <button id="report-btn" class="source-type-btn bg-indigo-100 text-indigo-800 border-indigo-300">
+                            <i class="fas fa-file-alt mr-2"></i> Report
+                        </button>
+                        <button id="patent-btn" class="source-type-btn bg-gray-100 text-gray-800 border-gray-300">
+                            <i class="fas fa-certificate mr-2"></i> Patent
+                        </button>
+                        <button id="dataset-btn" class="source-type-btn bg-teal-100 text-teal-800 border-teal-300">
+                            <i class="fas fa-database mr-2"></i> Dataset
+                        </button>
+                        <button id="interview-btn" class="source-type-btn bg-orange-100 text-orange-800 border-orange-300">
+                            <i class="fas fa-microphone mr-2"></i> Interview
+                        </button>
+                        <button id="manuscript-btn" class="source-type-btn bg-amber-100 text-amber-800 border-amber-300">
+                            <i class="fas fa-file-contract mr-2"></i> Manuscript
+                        </button>
+                        <button id="av-btn" class="source-type-btn bg-cyan-100 text-cyan-800 border-cyan-300">
+                            <i class="fas fa-film mr-2"></i> Audio/Visual
+                        </button>
+                        <button id="book-btn" class="source-type-btn bg-blue-100 text-blue-800 border-blue-300">
+                            <i class="fas fa-book mr-2"></i> Book
+                        </button>
+                    </div>
+                </div>
+
+                <div id="citation-form" class="space-y-6">
+                    <div id="form-placeholder" class="text-center py-12 bg-gray-50 rounded-lg">
+                        <i class="fas fa-hand-pointer text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-700">Select a source type to begin</h3>
+                        <p class="text-gray-500 mt-2">Our AI will generate the perfect citation for your academic work</p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div class="relative flex-1 min-w-[200px]">
+                            <select id="citation-style" class="w-full px-4 py-3 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="apa">APA (7th Edition)</option>
+                                <option value="mla">MLA (9th Edition)</option>
+                                <option value="chicago">Chicago (17th Edition)</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-500"></i>
+                            </div>
+                        </div>
+                        <button id="generate-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center transition-colors">
+                            <i class="fas fa-magic mr-2"></i> Generate Citation
+                        </button>
+                        <button id="clear-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium flex items-center transition-colors">
+                            <i class="fas fa-broom mr-2"></i> Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-section" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Generated Citations</h2>
+                <div class="flex space-x-3">
+                    <button id="copy-all-btn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-copy mr-2"></i> Copy All
+                    </button>
+                    <button id="export-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-file-export mr-2"></i> Export
+                    </button>
+                </div>
+            </div>
+
+            <div id="citation-results" class="space-y-4">
+            </div>
+        </div>
+
+        <div id="loading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white p-8 rounded-xl max-w-md w-full text-center">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mx-auto mb-4"></div>
+                <h3 class="text-xl font-semibold text-gray-800">Generating Citations</h3>
+                <p class="text-gray-600 mt-2">Our AI is analyzing your source and creating perfectly formatted citations...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2"> Instant Academic Citation</h3>
+                    <p class="text-gray-400">Developed and Powered by: Mulalo Makananisa</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-blue-300"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
+                <p>© 2025. CitationHub All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="guide-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Citation Guide</h3>
+                    <button id="close-guide" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                
+                <div class="prose max-w-none">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-3 text-left border">Source Type</th>
+                                <th class="p-3 text-left border">Description</th>
+                                <th class="p-3 text-left border">Key Citation Elements</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Journal Article</td>
+                                <td class="p-3 border">Scholarly articles published in academic journals, often peer-reviewed.</td>
+                                <td class="p-3 border">Author(s), year, article title, journal name, volume, issue, page numbers, DOI or URL</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Conference Paper</td>
+                                <td class="p-3 border">Papers presented at academic or professional conferences.</td>
+                                <td class="p-3 border">Author(s), year, paper title, conference name, location, page numbers (if available), DOI or URL</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Thesis/Dissertation</td>
+                                <td class="p-3 border">Academic research submitted in support of a degree (e.g., Master's or PhD).</td>
+                                <td class="p-3 border">Author, year, title (italicized), type of thesis, university, repository URL (if online)</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Website</td>
+                                <td class="p-3 border">Content found on web pages including articles, blogs, or organizational content.</td>
+                                <td class="p-3 border">Author/organization, year (or "n.d."), title, site name, URL</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Newspaper Article</td>
+                                <td class="p-3 border">News reports from print or online newspapers.</td>
+                                <td class="p-3 border">Author, date, article title, newspaper name, page number (if in print), URL (if online)</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Magazine Article</td>
+                                <td class="p-3 border">Informative or entertaining articles for the general public.</td>
+                                <td class="p-3 border">Author, date, title, magazine name, volume(issue), page numbers or URL</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Report</td>
+                                <td class="p-3 border">Formal documents by governments, NGOs, or institutions.</td>
+                                <td class="p-3 border">Authoring body, year, title (italicized), report number (if any), publisher, URL</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Patent</td>
+                                <td class="p-3 border">Legal document granting exclusive rights to an invention.</td>
+                                <td class="p-3 border">Inventor(s), year, title, patent number, issuing authority</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Dataset</td>
+                                <td class="p-3 border">Raw data used for research or analysis.</td>
+                                <td class="p-3 border">Author(s), year, title, version, repository name, DOI or URL</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Interview</td>
+                                <td class="p-3 border">Spoken content from experts or individuals (may be personal or published).</td>
+                                <td class="p-3 border">Interviewee, year, type (personal/published), interviewer, date, platform (if applicable)</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Manuscript</td>
+                                <td class="p-3 border">Unpublished academic or creative work.</td>
+                                <td class="p-3 border">Author(s), year, title (italicized), status (e.g., unpublished manuscript), institution or source</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Audio/Visual</td>
+                                <td class="p-3 border">Videos, podcasts, films, music recordings, etc.</td>
+                                <td class="p-3 border">Creator(s), year, title, format (e.g., [Film], [Podcast]), platform or publisher, URL</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 border font-semibold">Book</td>
+                                <td class="p-3 border">Published long-form works, fiction or non-fiction.</td>
+                                <td class="p-3 border">Author(s), year, title (italicized), edition (if not 1st), publisher</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

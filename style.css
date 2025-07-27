@@ -1,0 +1,27 @@
+.citation-result {
+    transition: all 0.3s ease;
+}
+.citation-result:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.floating-label {
+    transform: translateY(-50%);
+    transition: all 0.2s ease;
+}
+input:focus + .floating-label,
+input:not(:placeholder-shown) + .floating-label {
+    transform: translateY(-120%) scale(0.9);
+    color: #3b82f6;
+}
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
